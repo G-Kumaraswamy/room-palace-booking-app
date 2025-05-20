@@ -9,6 +9,14 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Booking, Customer } from '@/types';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const Reports = () => {
   const { user } = useAuth();
@@ -101,12 +109,17 @@ const Reports = () => {
         bookingId: booking.id,
         customerName: customer ? customer.name : 'Unknown',
         customerContact: customer ? customer.phone : 'N/A',
+        customerEmail: customer ? customer.email : 'N/A',
+        customerAddress: customer ? customer.address : 'N/A',
+        customerIdType: customer ? customer.idType : 'N/A',
+        customerIdNumber: customer ? customer.idNumber : 'N/A',
         roomNumber: room ? room.roomNumber : 'Unknown',
         roomType: room ? room.type : 'Unknown',
         checkInDate: booking.checkInDate,
         checkOutDate: booking.checkOutDate,
         status: booking.status,
-        totalAmount: booking.totalAmount
+        totalAmount: booking.totalAmount,
+        bookingDate: new Date().toISOString().split('T')[0] // Assuming today as booking date if not available
       };
     });
   };
@@ -131,6 +144,8 @@ const Reports = () => {
               <th>Booking ID</th>
               <th>Customer</th>
               <th>Contact</th>
+              <th>Email</th>
+              <th>ID Type/Number</th>
               <th>Room</th>
               <th>Check-in</th>
               <th>Check-out</th>
@@ -144,6 +159,8 @@ const Reports = () => {
                 <td>${booking.bookingId}</td>
                 <td>${booking.customerName}</td>
                 <td>${booking.customerContact}</td>
+                <td>${booking.customerEmail}</td>
+                <td>${booking.customerIdType}: ${booking.customerIdNumber}</td>
                 <td>${booking.roomNumber} (${booking.roomType})</td>
                 <td>${new Date(booking.checkInDate).toLocaleDateString()}</td>
                 <td>${new Date(booking.checkOutDate).toLocaleDateString()}</td>
@@ -257,7 +274,7 @@ const Reports = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="bookings" onValueChange={(value) => setSelectedReport(value as any)}>
+      <Tabs defaultValue="customerBookings" onValueChange={(value) => setSelectedReport(value as any)}>
         <TabsList className="grid grid-cols-4 w-full max-w-md">
           <TabsTrigger value="bookings" className="flex items-center">
             <FileText className="mr-2 h-4 w-4" />
@@ -375,39 +392,51 @@ const Reports = () => {
             <CardContent>
               {customerBookings.length > 0 ? (
                 <div className="overflow-x-auto">
-                  <table className="w-full border-collapse">
-                    <thead>
-                      <tr className="bg-muted">
-                        <th className="text-left p-2 border">Booking ID</th>
-                        <th className="text-left p-2 border">Customer</th>
-                        <th className="text-left p-2 border">Room</th>
-                        <th className="text-left p-2 border">Check-in</th>
-                        <th className="text-left p-2 border">Check-out</th>
-                        <th className="text-left p-2 border">Status</th>
-                        <th className="text-left p-2 border">Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Booking ID</TableHead>
+                        <TableHead>Customer</TableHead>
+                        <TableHead>Room</TableHead>
+                        <TableHead>Contact</TableHead>
+                        <TableHead>ID Details</TableHead>
+                        <TableHead>Check-in</TableHead>
+                        <TableHead>Check-out</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Amount</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
                       {customerBookings.map((booking) => (
-                        <tr key={booking.bookingId} className="hover:bg-muted">
-                          <td className="p-2 border">{booking.bookingId}</td>
-                          <td className="p-2 border">{booking.customerName}</td>
-                          <td className="p-2 border">{booking.roomNumber} ({booking.roomType})</td>
-                          <td className="p-2 border">{new Date(booking.checkInDate).toLocaleDateString()}</td>
-                          <td className="p-2 border">{new Date(booking.checkOutDate).toLocaleDateString()}</td>
-                          <td className="p-2 border">
+                        <TableRow key={booking.bookingId}>
+                          <TableCell className="font-medium">{booking.bookingId}</TableCell>
+                          <TableCell>
+                            <div className="font-medium">{booking.customerName}</div>
+                            <div className="text-xs text-muted-foreground">{booking.customerEmail}</div>
+                          </TableCell>
+                          <TableCell>
+                            {booking.roomNumber} 
+                            <span className="text-xs ml-1">({booking.roomType})</span>
+                          </TableCell>
+                          <TableCell>{booking.customerContact}</TableCell>
+                          <TableCell>
+                            {booking.customerIdType}: {booking.customerIdNumber}
+                          </TableCell>
+                          <TableCell>{new Date(booking.checkInDate).toLocaleDateString()}</TableCell>
+                          <TableCell>{new Date(booking.checkOutDate).toLocaleDateString()}</TableCell>
+                          <TableCell>
                             <span className={`px-2 py-1 rounded text-xs font-medium
                               ${booking.status === 'active' ? 'bg-green-100 text-green-800' : 
                                 booking.status === 'completed' ? 'bg-blue-100 text-blue-800' : 
                                 'bg-red-100 text-red-800'}`}>
                               {booking.status}
                             </span>
-                          </td>
-                          <td className="p-2 border">₹{booking.totalAmount}</td>
-                        </tr>
+                          </TableCell>
+                          <TableCell className="font-medium">₹{booking.totalAmount}</TableCell>
+                        </TableRow>
                       ))}
-                    </tbody>
-                  </table>
+                    </TableBody>
+                  </Table>
                 </div>
               ) : (
                 <div className="text-center p-6">
