@@ -23,61 +23,81 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <Routes>
-              {/* Public route */}
-              <Route path="/login" element={<Login />} />
-              
-              {/* Protected routes */}
-              <Route path="/" element={
-                <ProtectedRoute>
+          <Routes>
+            {/* Public route */}
+            <Route path="/login" element={<Login />} />
+            
+            {/* Protected routes */}
+            <Route path="/" element={
+              <ProtectedRoute>
+                <TooltipProvider>
                   <AppLayout>
                     <Dashboard />
                   </AppLayout>
-                </ProtectedRoute>
-              } />
-              <Route path="/rooms" element={
-                <ProtectedRoute>
-                  <AppLayout>
-                    <Rooms />
-                  </AppLayout>
-                </ProtectedRoute>
-              } />
-              <Route path="/customers" element={
-                <ProtectedRoute>
+                  <Toaster />
+                  <Sonner />
+                </TooltipProvider>
+              </ProtectedRoute>
+            } />
+            <Route path="/customers" element={
+              <ProtectedRoute>
+                <TooltipProvider>
                   <AppLayout>
                     <Customers />
                   </AppLayout>
-                </ProtectedRoute>
-              } />
-              <Route path="/bookings" element={
-                <ProtectedRoute>
+                  <Toaster />
+                  <Sonner />
+                </TooltipProvider>
+              </ProtectedRoute>
+            } />
+            <Route path="/rooms" element={
+              <ProtectedRoute>
+                <TooltipProvider>
+                  <AppLayout>
+                    <Rooms />
+                  </AppLayout>
+                  <Toaster />
+                  <Sonner />
+                </TooltipProvider>
+              </ProtectedRoute>
+            } />
+            <Route path="/bookings" element={
+              <ProtectedRoute>
+                <TooltipProvider>
                   <AppLayout>
                     <Bookings />
                   </AppLayout>
-                </ProtectedRoute>
-              } />
-              <Route path="/payments" element={
-                <ProtectedRoute allowedRoles={["staff", "admin"]}>
+                  <Toaster />
+                  <Sonner />
+                </TooltipProvider>
+              </ProtectedRoute>
+            } />
+            <Route path="/payments" element={
+              <ProtectedRoute allowedRoles={["staff", "admin"]}>
+                <TooltipProvider>
                   <AppLayout>
                     <Payments />
                   </AppLayout>
-                </ProtectedRoute>
-              } />
-              <Route path="/reports" element={
-                <ProtectedRoute>
+                  <Toaster />
+                  <Sonner />
+                </TooltipProvider>
+              </ProtectedRoute>
+            } />
+            <Route path="/reports" element={
+              <ProtectedRoute>
+                <TooltipProvider>
                   <AppLayout>
                     <Reports />
                   </AppLayout>
-                </ProtectedRoute>
-              } />
-              
-              {/* Not found route */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </TooltipProvider>
+                  <Toaster />
+                  <Sonner />
+                </TooltipProvider>
+              </ProtectedRoute>
+            } />
+            
+            {/* Not found route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>
