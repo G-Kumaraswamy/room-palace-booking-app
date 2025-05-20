@@ -4,10 +4,11 @@ import { useAuth } from "@/contexts/AuthContext";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  allowedRoles?: string[];
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { isAuthenticated, isLoading } = useAuth();
+const ProtectedRoute = ({ children, allowedRoles }: ProtectedRouteProps) => {
+  const { isAuthenticated, isLoading, user } = useAuth();
 
   // Show loading indicator while checking authentication
   if (isLoading) {
@@ -23,7 +24,13 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <Navigate to="/login" />;
   }
 
-  // Render children if authenticated
+  // Check role-based access if allowedRoles is provided
+  if (allowedRoles && user && !allowedRoles.includes(user.role)) {
+    // If user doesn't have the required role, redirect to dashboard
+    return <Navigate to="/" />;
+  }
+
+  // Render children if authenticated and authorized
   return <>{children}</>;
 };
 

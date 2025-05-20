@@ -11,6 +11,8 @@ import Dashboard from "./pages/Dashboard";
 import Rooms from "./pages/Rooms";
 import Customers from "./pages/Customers";
 import Bookings from "./pages/Bookings";
+import Payments from "./pages/Payments";
+import Reports from "./pages/Reports";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
@@ -53,6 +55,20 @@ const App = () => (
               <ProtectedRoute>
                 <AppLayout>
                   <Bookings />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/payments" element={
+              <ProtectedRoute allowedRoles={["staff", "admin"]}>
+                <AppLayout>
+                  <Payments />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/reports" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <Reports />
                 </AppLayout>
               </ProtectedRoute>
             } />

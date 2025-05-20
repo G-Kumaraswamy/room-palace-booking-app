@@ -103,20 +103,20 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gray-50">
+    <div className="min-h-screen hotel-gradient flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md mb-8 text-center">
         <div className="flex items-center justify-center mb-2">
-          <Hotel className="h-8 w-8 text-primary mr-2" />
-          <h1 className="text-3xl font-bold text-primary">Hotel Manager</h1>
+          <Hotel className="h-8 w-8 text-hotel-primary mr-2" />
+          <h1 className="text-3xl font-bold text-hotel-primary">KH Hotels</h1>
         </div>
-        <p className="text-gray-600">Staff Management System</p>
+        <p className="text-gray-600">SINGNAYAKANAHALLI, Bengaluru</p>
       </div>
       
-      <Card className="w-full max-w-md shadow-lg">
+      <Card className="w-full max-w-md shadow-lg animate-fade-in">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Welcome</CardTitle>
+          <CardTitle className="text-2xl text-center">Hotel Management System</CardTitle>
           <CardDescription className="text-center">
-            Log in to your account or create a new one
+            Create an account or login to access the system
           </CardDescription>
         </CardHeader>
         
@@ -161,7 +161,7 @@ const Login = () => {
                 
                 <Button 
                   type="submit" 
-                  className="w-full" 
+                  className="w-full bg-hotel-primary hover:bg-hotel-primary/90" 
                   disabled={isLoading}
                 >
                   {isLoading ? "Logging in..." : "Login"}
@@ -231,7 +231,7 @@ const Login = () => {
                 
                 <Button 
                   type="submit" 
-                  className="w-full" 
+                  className="w-full bg-hotel-primary hover:bg-hotel-primary/90" 
                   disabled={isLoading}
                 >
                   {isLoading ? "Creating Account..." : "Create Account"}
@@ -242,7 +242,7 @@ const Login = () => {
         </CardContent>
         
         <CardFooter className="flex justify-center text-sm text-gray-500">
-          Hotel Management System &copy; {new Date().getFullYear()}
+          Hotel Management System &copy; 2024 KH Hotels
         </CardFooter>
       </Card>
     </div>

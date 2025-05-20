@@ -28,3 +28,14 @@ export interface Customer {
   idType?: string;
   idNumber?: string;
 }
+
+export interface Payment {
+  id: string;
+  bookingId: string;
+  customerName: string;
+  roomNumber: string;
+  amount: number;
+  paymentMethod: string;
+  paymentDate: string;
+  status: 'completed' | 'pending' | 'failed';
+}
