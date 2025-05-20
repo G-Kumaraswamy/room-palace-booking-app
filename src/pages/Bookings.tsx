@@ -71,18 +71,18 @@ const Bookings = () => {
   const handleCancelBooking = () => {
     if (!selectedBooking) return;
     
-    // Update booking status
+    // Update booking status - use explicit type 'cancelled' instead of string
     const updatedBookings = bookings.map(booking => 
       booking.id === selectedBooking.id 
-        ? { ...booking, status: 'cancelled' } 
+        ? { ...booking, status: 'cancelled' as const } 
         : booking
     );
     setBookings(updatedBookings);
     
-    // Update room status
+    // Update room status - use explicit type 'available' instead of string
     const updatedRooms = rooms.map(room => 
       room.id === selectedBooking.roomId 
-        ? { ...room, status: 'available' } 
+        ? { ...room, status: 'available' as const } 
         : room
     );
     setRooms(updatedRooms);
@@ -94,18 +94,18 @@ const Bookings = () => {
   const handleCompleteBooking = () => {
     if (!selectedBooking) return;
     
-    // Update booking status
+    // Update booking status - use explicit type 'completed' instead of string
     const updatedBookings = bookings.map(booking => 
       booking.id === selectedBooking.id 
-        ? { ...booking, status: 'completed' } 
+        ? { ...booking, status: 'completed' as const } 
         : booking
     );
     setBookings(updatedBookings);
     
-    // Update room status
+    // Update room status - use explicit type 'available' instead of string
     const updatedRooms = rooms.map(room => 
       room.id === selectedBooking.roomId 
-        ? { ...room, status: 'available' } 
+        ? { ...room, status: 'available' as const } 
         : room
     );
     setRooms(updatedRooms);
